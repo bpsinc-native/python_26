@@ -19,6 +19,8 @@ Local Modifications:
   necessary for the .pyd files in this directory to load it in preference to a
   local copy in \windows\system32.
 * Deleted *.pyc *.pyo files from the tree.
+* Added setup_env.bat
+* Added google.pth link to tools/google
 
 On Windows, Python is most useful with the PyWin32 extensions installed.  These
 extensions provide process control and filesystem APIs (linking, etc.) which
