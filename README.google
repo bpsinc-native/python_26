@@ -5,7 +5,7 @@ License File: Doc/License.txt
 Description: ActivePython for Windows.
 
 Local Modifications:
-* Installed ActivePython. Did not install the Documentation feature nor 
+* Installed ActivePython. Did not install the Documentation feature nor
   register it as the default python.
 * Moved the following files from \windows\system32 to the
   python folder:
@@ -18,9 +18,12 @@ Local Modifications:
 * Made a copy of pywintypes26.dll in Lib\site-packages\win32.  This is
   necessary for the .pyd files in this directory to load it in preference to a
   local copy in \windows\system32.
-* Deleted *.pyc *.pyo files from the tree.
 * Added setup_env.bat
 * Added google.pth link to tools/google
+* Installed py2exe from www.py2exe.org, and copied the whole py2exe folder
+  as well as _memimporter.pyd, py2exe-0.6.9-py2.6.egg-info and zipextimporter.py
+  under Lib\site-packages.
+* Deleted *.pyc *.pyo files from the tree.
 
 On Windows, Python is most useful with the PyWin32 extensions installed.  These
 extensions provide process control and filesystem APIs (linking, etc.) which
