@@ -5,4 +5,4 @@
 if "%SETUP_ENV_PYTHON_26%"=="done" goto :EOF
 set  SETUP_ENV_PYTHON_26=done
 
-set PATH=%PATH%;%~dp0
+set PATH=%~dp0;%PATH%
