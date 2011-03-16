@@ -24,6 +24,8 @@ Local Modifications:
   as well as _memimporter.pyd, py2exe-0.6.9-py2.6.egg-info and zipextimporter.py
   under Lib\site-packages.
 * Deleted *.pyc *.pyo files from the tree.
+* Patched in fix for http://bugs.python.org/issue5752
+  See patch below.
 
 On Windows, Python is most useful with the PyWin32 extensions installed.  These
 extensions provide process control and filesystem APIs (linking, etc.) which
@@ -67,3 +69,36 @@ Follow this decision tree to determine where your addon should live:
 Unfortunately, PyWin32 falls into the least-hermetic category.  It installs
 .dll files into \windows\system32, which are referenced both directly by its
 .pyd files and indirectly via LoadLibrary() calls.
+
+
+* Fix for http://bugs.python.org/issue5752:
+Index: Lib/xml/dom/minidom.py
+===================================================================
+--- Lib/xml/dom/minidom.py	(revision 70627)
++++ Lib/xml/dom/minidom.py	(working copy)
+@@ -296,10 +296,15 @@
+         node = node.parentNode
+     return False
+ 
+-def _write_data(writer, data):
++def _write_data(writer, data, is_attrib=False):
+     "Writes datachars to writer."
+     data = data.replace("&", "&amp;").replace("<", "&lt;")
+     data = data.replace("\"", "&quot;").replace(">", "&gt;")
++    if is_attrib:
++      data = data.replace(
++          "\r", "&#xD;").replace(
++          "\n", "&#xA;").replace(
++          "\t", "&#x9;")
+     writer.write(data)
+ 
+ def _get_elements_by_tagName_helper(parent, name, rc):
+@@ -809,7 +814,7 @@
+ 
+         for a_name in a_names:
+             writer.write(" %s=\"" % a_name)
+-            _write_data(writer, attrs[a_name].value)
++            _write_data(writer, attrs[a_name].value, is_attrib=True)
+             writer.write("\"")
+         if self.childNodes:
+             writer.write(">%s"%(newl))
