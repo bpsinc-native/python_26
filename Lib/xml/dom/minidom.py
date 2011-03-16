@@ -296,15 +296,10 @@ def _in_document(node):
         node = node.parentNode
     return False
 
-def _write_data(writer, data, is_attrib=False):
+def _write_data(writer, data):
     "Writes datachars to writer."
     data = data.replace("&", "&amp;").replace("<", "&lt;")
     data = data.replace("\"", "&quot;").replace(">", "&gt;")
-    if is_attrib:
-      data = data.replace(
-          "\r", "&#xD;").replace(
-          "\n", "&#xA;").replace(
-          "\t", "&#x9;")
     writer.write(data)
 
 def _get_elements_by_tagName_helper(parent, name, rc):
@@ -814,7 +809,7 @@ class Element(Node):
 
         for a_name in a_names:
             writer.write(" %s=\"" % a_name)
-            _write_data(writer, attrs[a_name].value, is_attrib=True)
+            _write_data(writer, attrs[a_name].value)
             writer.write("\"")
         if self.childNodes:
             writer.write(">%s"%(newl))
