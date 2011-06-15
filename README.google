@@ -24,6 +24,8 @@ Local Modifications:
   as well as _memimporter.pyd, py2exe-0.6.9-py2.6.egg-info and zipextimporter.py
   under Lib\site-packages.
 * Deleted *.pyc *.pyo files from the tree.
+* Set svn:executable recursively on *.dll *.exe *.py *.pyd *.pyw.  Set
+  svn:eol-style to LF recursively on *.py *.pyw.
 
 On Windows, Python is most useful with the PyWin32 extensions installed.  These
 extensions provide process control and filesystem APIs (linking, etc.) which
